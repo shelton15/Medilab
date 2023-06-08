@@ -1,15 +1,25 @@
-#how to connect database to website using php?
 <?php
-// <!--DELIMITER-->Example configuration:
-$databaseHost = 'localhost';
-$databaseUsername = 'Mondocta_database';
-$databasePassword = '';
-$databaseName = 'Mondocta_database';
+    Class Connection {
+        // db params
+        private $host = "localhost";
+        private $db_name = "Mondocta_database";
+        private $username = "root";
+        private $password = "";
+        private $conn;
 
-// <!--DELIMITER-->Run the application using the built-in web server.
+        // db connect 
+        public function connect(){
+            $this->conn = null;
 
+            try{
+                $this->conn = new PDO('mysql:host='. $this->host .';dbname='. $this->db_name,
+                $this->username, $this->password);
+                $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            }catch(PDOException $e){
+                echo 'Connection Error: '. $e->getMessage();
+            }
 
-// <!--DELIMITER-->Source: https://github.com/mariadb-developers/php-quickstart
-
+            return $this->conn; 
+        }
+    }
 ?>
-
